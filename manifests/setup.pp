@@ -118,9 +118,9 @@ class tinydns::setup {
         require => [Exec["dnscache-setup"], Package["daemontools"], Package["bsdutils"]],
         notify => Service["dnscache-log"]
     }
-   file { "/etc/dnscache/root/servers/internal":
+    file { "/etc/dnscache/root/servers/internal":
 	ensure => present,
 	content => "127.0.0.1",
 	require => Exec['dnscache-setup'],
-   }
+    }
 }
