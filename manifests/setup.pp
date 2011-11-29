@@ -45,6 +45,7 @@ class tinydns::setup {
 
     package { "djbdns":
         ensure => "present"
+	source => "puppet://modules/tinydns/djbdns_1.05-4+lenny1_amd64.deb",
     }
 
     package { "make":
