@@ -44,8 +44,9 @@ class tinydns::setup {
     }
 
     package { "djbdns":
-        ensure => "present"
-	source => "puppet://modules/tinydns/djbdns_1.05-4+lenny1_amd64.deb",
+        ensure => "present",
+	source => "/etc/puppet/modules/tinydns/files/djbdns_1.05-4+lenny1_amd64.deb",
+	provider => dpkg,
     }
 
     package { "make":
@@ -59,15 +60,25 @@ class tinydns::setup {
     package { "daemontools":
         ensure => "present"
     }
+    package { "daemontools-run":
+        ensure => "present"
+    }
+
+    file { "/etc/service":
+	ensure => directory,
+	mode => 0640,
+    }
 
     file { "/etc/service/tinydns":
-        ensure => "/etc/tinydns",
-        require => [Exec["tinydns-setup"], Exec["dnscache-setup"]]
+	ensure => link,
+        target => "/etc/tinydns",
+        require => [File['/etc/service'], Exec["tinydns-setup"], Exec["dnscache-setup"]]
     }
 
     file { "/etc/service/dnscache":
-        ensure => "/etc/dnscache",
-        require => [Exec["tinydns-setup"], Exec["dnscache-setup"]]
+	ensure => link,
+        target => "/etc/dnscache",
+        require => [File['/etc/service'], Exec["tinydns-setup"], Exec["dnscache-setup"]]
     }
 
     service { "dnscache":
@@ -107,4 +118,9 @@ class tinydns::setup {
         require => [Exec["dnscache-setup"], Package["daemontools"], Package["bsdutils"]],
         notify => Service["dnscache-log"]
     }
+   file { "/etc/dnscache/root/servers/internal":
+	ensure => present,
+	content => "127.0.0.1",
+	require => Exec['dnscache-setup'],
+   }
 }

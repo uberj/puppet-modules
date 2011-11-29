@@ -1,3 +1,5 @@
-import "setup.pp"
+class tinydns {
 
-class tinydns {}
+	include tinydns::setup
+
+}
