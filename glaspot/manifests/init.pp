@@ -31,5 +31,3 @@ class glaspot{
 		require	=> File['/home/glaspot/glaspot/'],
 	}
 }
-
-class {'glaspot': }
