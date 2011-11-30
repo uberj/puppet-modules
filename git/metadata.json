@@ -1,0 +1,25 @@
+{
+  "dependencies": [
+
+  ],
+  "name": "puppetmanaged-git",
+  "author": "",
+  "license": "",
+  "version": "0.5.0",
+  "types": [
+
+  ],
+  "checksums": {
+    "puppet-module-git.spec": "ae20a18b270e49dea91180b9f66c8ed5",
+    "files/git_init_script": "6f32c37f710b4d6ecfa1ff1876f6fe77",
+    "files/post-commit": "1953ea9f8a74449bc7d9fc5a71c00fed",
+    "COPYING": "d32239bcb673463ab874e80d47fae504",
+    "README": "88d71751771bb7b85b65af15b02f4ac0",
+    "files/git.init": "7379d27dadf5ad9aecf4e4947a7ae4e1",
+    "templates/commit-list.erb": "6d88eabf45a9be4f7475e71acc96d4c4",
+    "Makefile": "a85161a19c93cebf6175b19d46043f20",
+    "Modulefile": "396c59d0db4c37e1ed5c4eaba1a647bd",
+    "manifests/init.pp": "7678955c7f0867a9e31f1b3e3310f30f"
+  },
+  "source": ""
+}

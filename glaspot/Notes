@@ -1,0 +1,14 @@
+For Vlan setup:
+http://www.seiichiro0185.org/blog:creating_a_seperate_guest_network_with_tomato
+
+Libev:
+http://dist.schmorp.de/libev/Attic/libev-4.04.tar.gz
+
+ssh: 2222
+uberj.dyndns-blog.com
+
+APD:
+http://pecl.php.net/get/apd
+(Had to manually patch)
+configure help: http://lzone.de/node/4
+

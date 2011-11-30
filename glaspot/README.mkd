@@ -1,0 +1,4 @@
+Learn puppet the hard way.
+==========================
+
+This may or may not have turned into an attempt to build glaspot using puppet.
