@@ -30,4 +30,7 @@ class glaspot{
 		port 	=> "9090",
 		require	=> File['/home/glaspot/glaspot/'],
 	}
+	
+	php_apd::install { "apd": }
+	glaspot::evnet::install { "evnet install": }
 }
