@@ -1,3 +1,5 @@
+== Originally written by
+== https://github.com/yendor/puppet-tinydns.git
 = Puppet-tinydns
 
 This module can be used to manage tinydns data files
