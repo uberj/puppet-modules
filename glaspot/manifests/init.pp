@@ -9,6 +9,9 @@ class glaspot{
 	package { 'python-dev':
 		ensure => installed,
 	}
+	package { 'python-chardet':
+		ensure => installed,
+	}
 
 	user { 'glaspot':
 		ensure => present,
