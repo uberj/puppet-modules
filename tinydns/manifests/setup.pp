@@ -1,6 +1,7 @@
-class tinydns::setup {
-	include tinydns::users
-	include tinydns::daemontools
+# subet: which network should dnscache resolve for.
+class tinydns::setup ( $subnet ){
+	include tinydns::users # Add users
+	include tinydns::daemontools #start the servies dnscache, and tinydns
 	include tinydns::utils # Contains all packages.
 
 	exec { "rebuild-tinydns-data":
@@ -18,7 +19,7 @@ class tinydns::setup {
 	exec { "dnscache-setup":
 		command => "/usr/bin/dnscache-conf dnscache dnslog /etc/dnscache $ipaddress",
 		creates => "/etc/dnscache",
-		 require => [Class['tinydns::utils'],Class['tinydns::users']]
+		require => [Class['tinydns::utils'],Class['tinydns::users']]
 	}
 	file { "/etc/service":
 		ensure 	=> directory,
@@ -35,13 +36,20 @@ class tinydns::setup {
 		target 	=> "/etc/dnscache",
 		require => Exec["dnscache-setup"],
 	}
+	file { "/etc/dnscache/root/ip/${subnet}":
+		ensure 	=> present,
+		mode 	=> 644,
+		owner 	=> "root",
+		group 	=> "root",
+		require => Exec["dnscache-setup"],
+	}
 	file { "/etc/tinydns/log/run":
 		require => Exec["tinydns-setup"],
 		notify 	=> Service["tinydns-log"],
 		ensure 	=> present,
 		owner 	=> "root",
 		group 	=> "root",
-		mode 		=> "0755",
+		mode 	=> "0755",
 		source 	=> "puppet:///modules/tinydns/tinydns-log",
 	}
 	file { "/etc/dnscache/log/run":

@@ -1,4 +1,6 @@
 class tinydns {
 	# Do work.
-	include tinydns::setup
+	class { 'tinydns::setup':
+		subnet => "10.0.2",
+	}
 }
