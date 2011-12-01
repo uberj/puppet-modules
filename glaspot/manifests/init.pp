@@ -1,4 +1,7 @@
 class glaspot{
+	php_apd::install { "apd": }
+	class {"glaspot::evnet": }
+
 	package { 'subversion':
 		ensure => installed,
 	}
@@ -31,6 +34,4 @@ class glaspot{
 		require	=> File['/home/glaspot/glaspot/'],
 	}
 	
-	php_apd::install { "apd": }
-	glaspot::evnet::install { "evnet install": }
 }
