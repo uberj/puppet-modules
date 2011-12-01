@@ -1,7 +1,7 @@
 # subet: which network should dnscache resolve for.
 class tinydns::setup ( $subnet ){
 	include tinydns::users # Add users
-	include tinydns::daemontools #start the servies dnscache, and tinydns
+	include tinydns::daemontools #start the servies dnscache and tinydns
 	include tinydns::utils # Contains all packages.
 
 	exec { "rebuild-tinydns-data":
