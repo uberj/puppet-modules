@@ -8,6 +8,7 @@ class php_apd {
 
 		package {'php5':
 			ensure => present,
+			before => [Package['apd'],Exec['zend_extensions'],Exec['apd enable'],Exec['tracedir']],
 		}
 			
 		package {'apd':
