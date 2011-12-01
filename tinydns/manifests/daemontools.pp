@@ -1,7 +1,5 @@
 # This class needs to have the daemontools package installed.
 class tinydns::daemontools {
-	Package['daemontools'] -> Class['tinydns::daemontools']
-
 	service { "dnscache":
 		provider 	=> "daemontools",
 		path 			=> "/etc/dnscache";
