@@ -2,8 +2,13 @@
 # Let's get this working before we make it pretty.
 #
 
-class evnet () {
-	define install(){
+class glaspot::evnet {
+		
+		package { 'python-openssl':
+			ensure => present,
+			before => Exec['evnet install'],
+		}
+			
 		file { '/home/glaspot/evnet/':
 			ensure => directory,
 			mode => 0640,
@@ -14,13 +19,13 @@ class evnet () {
 		git::clone { "evnet":
 			source => "https://github.com/rep/evnet.git",
 			localtree => "/home/glaspot/",
+			require => User['glaspot'],
 		}
 
 		exec { 'evnet install':
-			path => ['/usr/bin'],
 			cwd => "/home/glaspot/evnet/",
-			command => "python setup.py build && python setup.py install",
+			unless => "/usr/bin/python -c 'import evnet'",
+			command => "/usr/bin/python setup.py build && python setup.py install",
 			require => Git::Clone['evnet'],
 		}
-	{
 }

@@ -5,9 +5,11 @@ class php_apd {
 		$php_ini = "/etc/php5/cli/php.ini",
 		$trace_dir = "/tmp/apd_traces" )
  	{
+		Exec { path => "/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin" }
 
 		package {'php5':
 			ensure => present,
+			before => [Package['apd'],Exec['zend_extensions'],Exec['apd enable'],Exec['tracedir']],
 		}
 			
 		package {'apd':
@@ -20,16 +22,16 @@ class php_apd {
 		#apd.statement=1
 		#apd.tracedir=/tmp/apd-traces
 		exec { 'zend_extensions':
-			unless => "/bin/grep zend_extension=/usr/lib/php5/20090626+lfs/apd.so ${php_ini}",
-			command => "/bin/echo 'zend_extension=/usr/lib/php5/20090626+lfs/apd.so' >> ${php_ini}",
+			unless => "grep zend_extension=/usr/lib/php5/20090626+lfs/apd.so ${php_ini}",
+			command => "echo 'zend_extension=/usr/lib/php5/20090626+lfs/apd.so' >> ${php_ini}",
 		}
 		exec { 'apd enable':
-			unless => "/bin/grep apd.statement=1 ${php_ini}",
-			command => "/bin/echo 'apd.statement=1' >> ${php_ini}",
+			unless => "grep apd.statement=1 ${php_ini}",
+			command => "echo 'apd.statement=1' >> ${php_ini}",
 		}
 		exec { 'tracedir':
-			unless => "/bin/grep apd.tracedir=${trace_dir} ${php_ini}",
-			command => "/bin/echo 'apd.tracedir=${trace_dir}' >> ${php_ini}",
+			unless => "grep apd.tracedir=${trace_dir} ${php_ini}",
+			command => "echo 'apd.tracedir=${trace_dir}' >> ${php_ini}",
 		}
 	}
 }
