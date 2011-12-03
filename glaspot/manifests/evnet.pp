@@ -1,6 +1,3 @@
-#
-# Let's get this working before we make it pretty.
-#
 # Parameters
 # basedir = where to keep the evnet library files.
 

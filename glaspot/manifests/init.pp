@@ -1,8 +1,18 @@
-# Params
-# basedir = place where glaspot will be installed.
-# 
-# By defualt everything will be installed into "opt". I've been doubly verbose about it.
-# If you want to though, you can pass a different dir like "/tmp" or something.
+# Glaspot
+# Jacques Uber (uberj)
+
+
+# How to install in non-defualt dir.
+# ----------------------------------
+# By default everything will be installed into "opt". If you would like to install things
+# into a different base dir, pass the basedir option to evnet or glaspot with the dir of your choice.
+# DO NOT PASS FUNKY STUFF TO PHP_APD UNLESS YOU KNOW WHAT YOU ARE DOING. read the code.
+# Let's say you want to install evnet into '/var'. Change the class declaration to
+#
+#		class { "glaspot::evnet": basedir => 'var' }
+#
+# Not the lack of a preceding '/'.
+
 
 class glaspot {
 	class { "php_apd::install": }
