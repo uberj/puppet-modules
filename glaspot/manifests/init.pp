@@ -16,6 +16,6 @@
 
 class glaspot {
 	class { "php_apd::install": }
-	class { "glaspot::evnet": }
+	class { "evnet::install": }
 	class { "glaspot::install": }
 }
