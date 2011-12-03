@@ -1,40 +1,11 @@
-class glaspot{
-	php_apd::install { "apd": }
-	class {"glaspot::evnet": }
+# Params
+# basedir = place where glaspot will be installed.
+# 
+# By defualt everything will be installed into "opt". I've been doubly verbose about it.
+# If you want to though, you can pass a different dir like "/tmp" or something.
 
-	package { 'subversion':
-		ensure => installed,
-	}
-
-	package { 'python-dev':
-		ensure => installed,
-	}
-	package { 'python-chardet':
-		ensure => installed,
-	}
-
-	user { 'glaspot':
-		ensure => present,
-		home => '/home/glaspot/',
-		managehome => true,
-	}
-
-	file { '/home/glaspot/glaspot/':
-		ensure => directory,
-		mode => 0640,
-		owner => glaspot,
-		require => User['glaspot'],
-	}
-
-
-	subversion::checkout { "glaspot":
-		repopath => "/glaspot",
-		workingdir => "/home/glaspot/glaspot/",
-		host	=> "glastopf.org",
-		method	=> "svn",
-		svnuser => "glaspot",
-		port 	=> "9090",
-		require	=> File['/home/glaspot/glaspot/'],
-	}
-	
+class glaspot {
+	class { "php_apd::install": }
+	class { "glaspot::evnet": }
+	class { "glaspot::install": }
 }

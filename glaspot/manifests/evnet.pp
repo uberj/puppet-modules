@@ -1,31 +1,35 @@
 #
 # Let's get this working before we make it pretty.
 #
+# Parameters
+# basedir = where to keep the evnet library files.
 
-class glaspot::evnet {
+class glaspot::evnet ( $basedir = "opt" ){
 		
-		package { 'python-openssl':
+		package { "python-openssl":
 			ensure => present,
-			before => Exec['evnet install'],
+			before => Exec["evnet install"],
 		}
 			
-		file { '/home/glaspot/evnet/':
+		file { "/${basedir}/evnet/":
 			ensure => directory,
 			mode => 0640,
 			owner => glaspot,
-			require => User['glaspot'],
+			require => User["glaspot"],
 		}
 
 		git::clone { "evnet":
 			source => "https://github.com/rep/evnet.git",
-			localtree => "/home/glaspot/",
-			require => User['glaspot'],
+			localtree => "/${basedir}",
+			require => User["glaspot"],
 		}
+		
+		Exec { path => "/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin" }
 
-		exec { 'evnet install':
-			cwd => "/home/glaspot/evnet/",
-			unless => "/usr/bin/python -c 'import evnet'",
-			command => "/usr/bin/python setup.py build && python setup.py install",
-			require => Git::Clone['evnet'],
+		exec { "evnet install":
+			cwd => "/${basedir}/evnet/",
+			unless => "python -c 'import evnet'",
+			command => "python setup.py build && python setup.py install",
+			require => Git::Clone["evnet"],
 		}
 }
