@@ -1,0 +1,36 @@
+Most of these puppet modules are for the specific task of installing glaspot. The repo should probably have a less generic name.
+
+_Important: As of now, I have only tested this build on debian6 amd64. It should work on x86 and other debian based distro's. It will most definitly *not* work on systems that rely on an rpm package manager like fedro. Puppet *can* handle those systems, but I just haven't written these modules to do so. If you want that sort of support, just ask._
+
+Installation
+------------
+Before we can use puppet to build glaspot, you should probably set up a VM. I used veewee and vagrant to build my environment and I highly recommend both tools. I'm going to assume in this guide that you are using vagrant.
+
+Here is the link the veewee project https://github.com/jedi4ever/veewee
+Come back when you have a box you want to install glaspot on.
+
+Ok, I now am assuming that that you have a working VM and you can ssh into it and install crap. Cool.
+
+First, checkout this repo into your VM.
+
+    git clone git@github.com:uberj/puppet-modules.git
+
+If you are using vagrant, there is a shared folder between guest and host systems. I have my vagrant setup in `/data/vagrant` on my host machine. This is where I call `vagrant up` and `vagrant ssh`. Once you are in the VM you'll notice the output of mount says that we have a handy partition:
+
+    root@basebox:~# mount
+    (...)
+    v-root on /vagrant type vboxsf (uid=1000,gid=1000,rw)
+
+This is where I checked put the repo.
+
+    cd /vagrant/ && git clone git@github.com:uberj/puppet-modules.git && cd puppet-modules
+
+I wrote a nifty (a.k.a a quick hack) bootstrap script to help install glaspot via puppet. You just need to run the script!
+
+    /vagrant/puppet-modules/glaspot/bootstrap.sh
+
+If you are using a different directory to do all this you will most likely need to edit bootstrap.sh. Just set `puppet_modules` to the directory where you put the puppet-modules repo.
+
+If all goes well you should have glaspot installed (by defualt into '/opt'). You can tweak where it is installed by passing different parameters to the glaspot module (read the comments).
+
+If you encounter an error. Please complain :).
