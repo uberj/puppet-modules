@@ -7,9 +7,6 @@ class glaspot::install ( $basedir = "/opt" ){
 		ensure => installed,
 	}
 
-	package { "python-dev":
-		ensure => installed,
-	}
 	package { "python-chardet":
 		ensure => installed,
 	}
