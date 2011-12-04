@@ -1,4 +1,4 @@
-# I'm pretty much modeling what this guy did: http://lzone.de/node/4
+# I'm pretty much modeling this after what this guy did: http://lzone.de/node/4
 
 class php_apd::install ( $php_ini = "/etc/php5/cli/php.ini", $trace_dir = "/tmp/apd_traces" ) {
 
@@ -15,17 +15,17 @@ class php_apd::install ( $php_ini = "/etc/php5/cli/php.ini", $trace_dir = "/tmp/
             source => "/vagrant/puppet-modules/php_apd/files/apd_1.0.1_i386.deb",
 			#source => "puppet:///modules/php_apd/apd_1.0.1_i386.deb",
 		}
-        #zend_extension=/usr/lib/php5/20090626+lfs/apd.so
-        #apd.statement=1
-        #apd.tracedir=/tmp/apd-traces
+
 		exec { 'zend_extensions':
 			unless => "grep zend_extension=/usr/lib/php5/20090626+lfs/apd.so ${php_ini}",
 			command => "echo 'zend_extension=/usr/lib/php5/20090626+lfs/apd.so' >> ${php_ini}",
 		}
+
 		exec { 'apd enable':
 			unless => "grep apd.statement=1 ${php_ini}",
 			command => "echo 'apd.statement=1' >> ${php_ini}",
 		}
+
 		exec { 'tracedir':
 			unless => "grep apd.tracedir=${trace_dir} ${php_ini}",
 			command => "echo 'apd.tracedir=${trace_dir}' >> ${php_ini}",

@@ -2,7 +2,7 @@
 # basedir = where to keep the evnet library files.
 
 class evnet::install ( $basedir = "opt" ){
-        
+
 		package { "git":
 			ensure => present,
 			before => Git::Clone['evnet'],
@@ -12,7 +12,7 @@ class evnet::install ( $basedir = "opt" ){
 			ensure => present,
 			before => Exec["evnet install"],
 		}
-        
+
 		package { "python-dev":
 			ensure => present,
 			before => Exec["evnet install"],
