@@ -8,16 +8,24 @@ do_start () {
 	if [ -f $PID_FILE ]
 	then
 		echo "pidfile $PID_FILE already exists."
+		ps -eo pid | grep $(cat $PID_FILE) > /dev/null
+		if [ $? -eq 1 ]
+		then
+			echo "No process found. Attemping to restart"
+			force_start
+		fi
 	else
+		force_start
+	fi
+
+}
+force_start (){
 		cd $GLASPOT
 		echo "Starting..."
 		python webserver.py > run_log &
 		echo $! > /var/run/glaspot.pid
-	fi
-
 }
 do_stop () {
-	
 	if [ -f $PID_FILE ]
 	then
 		echo "Stopping..."
@@ -28,6 +36,19 @@ do_stop () {
 	fi
 
 }
+
+# Return 0 if things are running. 1 if glaspot isn't started.
+get_status () {
+	ps -eo pid | grep $(cat $PID_FILE) > /dev/null
+	ret=$?
+	if [ $ret -ne 1 ]
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
 case "$1" in
   start)
 	do_start
@@ -35,13 +56,20 @@ case "$1" in
   stop)
 	do_stop
 	;;
+  status)
+	get_status
+	if [ $? -eq 1 ]
+	then
+		exit 1
+	fi
+	;;
 
   restart)
 	do_start
 	do_stop
 	;;
   *)
-	echo "Usage: /etc/init.d/glaspot {start|stop|restart}"
+	echo "Usage: /etc/init.d/glaspot {start|stop|restart|status}"
 	exit 1
 esac
 
