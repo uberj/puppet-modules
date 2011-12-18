@@ -15,7 +15,9 @@
 
 
 class glaspot {
+    Class["php_apd::install"] -> Class["evnet::install"] -> Class["glaspot::install"] -> Class["glaspot::running"]
 	class { "php_apd::install": }
 	class { "evnet::install": }
 	class { "glaspot::install": }
+    class { "glaspot::running": }
 }
