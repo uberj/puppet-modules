@@ -10,17 +10,19 @@ do_start () {
 		echo "pidfile $PID_FILE already exists."
 	else
 		cd $GLASPOT
-		python webserver.py
+		echo "Starting..."
+		python webserver.py > run_log &
 		echo $! > /var/run/glaspot.pid
 	fi
 
 }
 do_stop () {
-
+	
 	if [ -f $PID_FILE ]
 	then
 		echo "Stopping..."
-		kill < $(cat $PID_FILE)
+		kill $(cat $PID_FILE)
+		rm $PID_FILE
 	else
 		echo "No pidfile. If you sure glaspot is running kill it manually"
 	fi
